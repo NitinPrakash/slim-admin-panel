@@ -1,0 +1,9 @@
+{ "require": 
+     { 
+         "slim/slim": "2.*",
+         "vrana/notorm":"dev-master",                
+         "alexgarrett/violin":"dev-master",
+         "phpoffice/phpexcel":"*",
+         "phpmailer/phpmailer": "~5.2"
+     }
+ }

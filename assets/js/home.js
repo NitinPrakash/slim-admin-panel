@@ -1,0 +1,1 @@
+$(document).ready(function(){ $('input').iCheck({ checkboxClass: 'icheckbox_flat-aero', radioClass: 'iradio_flat-aero' }); });
