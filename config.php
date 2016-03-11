@@ -17,7 +17,7 @@
     define( 'BASEFILE',$base_file );
     define( 'HOST',$host );    
     
-    $session = new \Bistro\Session\MockArray();
+    //$session = new \Bistro\Session\MockArray();
     
     $db = new NotORM($pdo);
     //$db->debug = true;
