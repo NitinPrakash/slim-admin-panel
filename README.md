@@ -1,2 +1,2 @@
-# slim-admin-panel
+# slim-admin panel
 Simple slimphp admin panel
