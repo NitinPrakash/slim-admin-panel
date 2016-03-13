@@ -8,21 +8,16 @@
     
     define( 'SITEROOT',$REQUEST->getRootUri() );
     define( 'RESOURCEURI',$REQUEST->getResourceUri() );
-    
+        
     $array_resource_uri = explode( '/',RESOURCEURI );
     $base_file = empty($array_resource_uri[1])?'home':$array_resource_uri[1];
     
     $host = $_SERVER['HTTP_HOST'];
     
     define( 'BASEFILE',$base_file );
-    define( 'HOST',$host );    
+    define( 'HOST',$host );            
     
-    //$session = new \Bistro\Session\MockArray();
-    
-    $db = new NotORM($pdo);
-    //$db->debug = true;
-    //$home_settings = ['plugins'=>['inline']];
-    
-    
+    $db = new NotORM($pdo);        
+    //$home_settings = ['plugins'=>['inline']];        
       
 ?>

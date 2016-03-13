@@ -67,24 +67,31 @@
                     </li>
                     <li class="ripple">
                       <a class="tree-toggle nav-header">
-                        <span class="fa-diamond fa"></span> Locations
+                        <span class="fa-phone fa"></span> Connections
                         <span class="fa-angle-right fa right-arrow text-right"></span>
                       </a>
                       <ul class="nav nav-list tree">
-                        <li><a href="<?php echo SITEROOT.'/cities';?>">Cities</a></li>
-                        <!--<li><a href="boxed.html">Boxed</a></li>-->
+                        <li><a href="<?php echo SITEROOT.'/contacts';?>">Contacts</a></li>
+                        <li><a href="<?php echo SITEROOT.'/contact_add';?>">Add Contact</a></li>                        
                       </ul>
                     </li>
                     <li class="ripple">
                       <a class="tree-toggle nav-header">
-                        <span class="fa-area-chart fa"></span> Schools
+                        <span class="fa-map-marker fa"></span> Locations
                         <span class="fa-angle-right fa right-arrow text-right"></span>
                       </a>
                       <ul class="nav nav-list tree">
-                        <li><a href="<?php echo SITEROOT.'/cities';?>">Institutes</a></li>
-                        <!--<li><a href="morris.html">Morris</a></li>
-                        <li><a href="flot.html">Flot</a></li>
-                        <li><a href="sparkline.html">SparkLine</a></li>-->
+                        <li><a href="<?php echo SITEROOT.'/cities';?>">Cities</a></li>                        
+                      </ul>
+                    </li>
+                    <li class="ripple">
+                      <a class="tree-toggle nav-header">
+                        <span class="fa-building fa"></span> Schools
+                        <span class="fa-angle-right fa right-arrow text-right"></span>
+                      </a>
+                      <ul class="nav nav-list tree">
+                        <li><a href="<?php echo SITEROOT.'/schools';?>">Institutes</a></li>
+                        <li><a href="<?php echo SITEROOT.'/school_add';?>">Add School</a></li>
                       </ul>
                     </li>
                     <!--<li class="ripple"><a class="tree-toggle nav-header">

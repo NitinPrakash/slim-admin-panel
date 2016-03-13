@@ -40,7 +40,7 @@
             if($user){
                $_SESSION['user'] = ['id'=> $user['id'],'email'=>$user['email'],'name'=>$user['name']];                
                $app->view()->setData('user', $user);
-               
+               //echo SITEROOT.'/dashboard';exit;
                $app->redirect(SITEROOT.'/dashboard'); 
             }else{
                $app->flash('error', 'Invalid user details. Please try again!'); '' ; 
@@ -56,7 +56,7 @@
         
         $app->get("/logout", function () use ($app) {
             unset($_SESSION['user']);
-            $app->flash('error', 'Login required');
+            $app->flash('error', 'You are logged out!');
             $app->view()->setData('user', null);
             $app->redirect(SITEROOT.'/');
         });
