@@ -51,6 +51,10 @@
         $app->get('/dashboard',$authenticate( $app ), function () use ( $app,$db ) { 
             $app->render( 'dashboard.php' ); 
         });
+        
+        $app->get('/contacts',$authenticate( $app ), function () use ( $app,$db ) { 
+            $app->render( 'contacts.php' ); 
+        });
 
         $app->get('/forgot', function() use( $app,$db ) { $app->render('forgot.php',['title'=>'Slim Test']); });
         
