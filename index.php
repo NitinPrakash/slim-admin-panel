@@ -53,6 +53,13 @@
         });
         
         $app->get('/contacts',$authenticate( $app ), function () use ( $app,$db ) { 
+            $contacts = $db->contacts();
+            
+            if( !count($contacts) ){
+                $contacts = NULL;
+            }
+            
+            $app->view()->setData('contacts',$contacts);
             $app->render( 'contacts.php' ); 
         });
 
