@@ -6,6 +6,7 @@
     $REQUEST = $app->request();
     $pdo = new PDO("mysql:host=localhost;dbname=sewa_admin", 'root', '');
     
+    define( 'SITENAME','Sewa Sankalp' );
     define( 'SITEROOT',$REQUEST->getRootUri() );
     define( 'RESOURCEURI',$REQUEST->getResourceUri() );
         

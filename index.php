@@ -62,6 +62,17 @@
             $app->view()->setData('contacts',$contacts);
             $app->render( 'contacts.php' ); 
         });
+        
+        $app->get('/schools',$authenticate( $app ), function () use ( $app,$db ) { 
+            $contacts = $db->contacts();
+            
+            if( !count($contacts) ){
+                $contacts = NULL;
+            }
+            
+            $app->view()->setData('contacts',$contacts);
+            $app->render( 'schools.php' ); 
+        });
 
         $app->get('/forgot', function() use( $app,$db ) { $app->render('forgot.php',['title'=>'Slim Test']); });
         
