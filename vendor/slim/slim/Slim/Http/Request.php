@@ -3,10 +3,10 @@
  * Slim - a micro PHP 5 framework
  *
  * @author      Josh Lockhart <info@slimframework.com>
- * @copyright   2011 Josh Lockhart
+ * @copyright   2011-2017 Josh Lockhart
  * @link        http://www.slimframework.com
  * @license     http://www.slimframework.com/license
- * @version     2.0.0
+ * @version     2.6.3
  * @package     Slim
  *
  * MIT LICENSE
@@ -48,6 +48,7 @@ class Request
     const METHOD_GET = 'GET';
     const METHOD_POST = 'POST';
     const METHOD_PUT = 'PUT';
+    const METHOD_PATCH = 'PATCH';
     const METHOD_DELETE = 'DELETE';
     const METHOD_OPTIONS = 'OPTIONS';
     const METHOD_OVERRIDE = '_METHOD';
@@ -58,18 +59,32 @@ class Request
     protected static $formDataMediaTypes = array('application/x-www-form-urlencoded');
 
     /**
-     * @var array
+     * Application Environment
+     * @var \Slim\Environment
      */
     protected $env;
 
     /**
-     * Constructor
-     * @param array $env
-     * @see   \Slim\Environment
+     * HTTP Headers
+     * @var \Slim\Http\Headers
      */
-    public function __construct($env)
+    public $headers;
+
+    /**
+     * HTTP Cookies
+     * @var \Slim\Helper\Set
+     */
+    public $cookies;
+
+    /**
+     * Constructor
+     * @param \Slim\Environment $env
+     */
+    public function __construct(\Slim\Environment $env)
     {
         $this->env = $env;
+        $this->headers = new \Slim\Http\Headers(\Slim\Http\Headers::extract($env));
+        $this->cookies = new \Slim\Helper\Set(\Slim\Http\Util::parseCookieHeader($env['HTTP_COOKIE']));
     }
 
     /**
@@ -109,6 +124,15 @@ class Request
     }
 
     /**
+     * Is this a PATCH request?
+     * @return bool
+     */
+    public function isPatch()
+    {
+        return $this->getMethod() === self::METHOD_PATCH;
+    }
+
+    /**
      * Is this a DELETE request?
      * @return bool
      */
@@ -143,11 +167,11 @@ class Request
     {
         if ($this->params('isajax')) {
             return true;
-        } elseif (isset($this->env['X_REQUESTED_WITH']) && $this->env['X_REQUESTED_WITH'] === 'XMLHttpRequest') {
+        } elseif (isset($this->headers['X_REQUESTED_WITH']) && $this->headers['X_REQUESTED_WITH'] === 'XMLHttpRequest') {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -163,23 +187,21 @@ class Request
      * Fetch GET and POST data
      *
      * This method returns a union of GET and POST data as a key-value array, or the value
-     * of the array key if requested; if the array key does not exist, NULL is returned.
+     * of the array key if requested; if the array key does not exist, NULL is returned,
+     * unless there is a default value specified.
      *
      * @param  string           $key
+     * @param  mixed            $default
      * @return array|mixed|null
      */
-    public function params($key = null)
+    public function params($key = null, $default = null)
     {
         $union = array_merge($this->get(), $this->post());
         if ($key) {
-            if (isset($union[$key])) {
-                return $union[$key];
-            } else {
-                return null;
-            }
-        } else {
-            return $union;
+            return isset($union[$key]) ? $union[$key] : $default;
         }
+
+        return $union;
     }
 
     /**
@@ -189,9 +211,10 @@ class Request
      * the value of the array key if requested; if the array key does not exist, NULL is returned.
      *
      * @param  string           $key
+     * @param  mixed            $default Default return value when key does not exist
      * @return array|mixed|null
      */
-    public function get($key = null)
+    public function get($key = null, $default = null)
     {
         if (!isset($this->env['slim.request.query_hash'])) {
             $output = array();
@@ -206,7 +229,7 @@ class Request
             if (isset($this->env['slim.request.query_hash'][$key])) {
                 return $this->env['slim.request.query_hash'][$key];
             } else {
-                return null;
+                return $default;
             }
         } else {
             return $this->env['slim.request.query_hash'];
@@ -220,10 +243,11 @@ class Request
      * the value of a hash key if requested; if the array key does not exist, NULL is returned.
      *
      * @param  string           $key
+     * @param  mixed            $default Default return value when key does not exist
      * @return array|mixed|null
      * @throws \RuntimeException If environment input is not available
      */
-    public function post($key = null)
+    public function post($key = null, $default = null)
     {
         if (!isset($this->env['slim.input'])) {
             throw new \RuntimeException('Missing slim.input in environment variables');
@@ -246,7 +270,7 @@ class Request
             if (isset($this->env['slim.request.form_hash'][$key])) {
                 return $this->env['slim.request.form_hash'][$key];
             } else {
-                return null;
+                return $default;
             }
         } else {
             return $this->env['slim.request.form_hash'];
@@ -256,21 +280,34 @@ class Request
     /**
      * Fetch PUT data (alias for \Slim\Http\Request::post)
      * @param  string           $key
+     * @param  mixed            $default Default return value when key does not exist
      * @return array|mixed|null
      */
-    public function put($key = null)
+    public function put($key = null, $default = null)
     {
-        return $this->post($key);
+        return $this->post($key, $default);
+    }
+
+    /**
+     * Fetch PATCH data (alias for \Slim\Http\Request::post)
+     * @param  string           $key
+     * @param  mixed            $default Default return value when key does not exist
+     * @return array|mixed|null
+     */
+    public function patch($key = null, $default = null)
+    {
+        return $this->post($key, $default);
     }
 
     /**
      * Fetch DELETE data (alias for \Slim\Http\Request::post)
      * @param  string           $key
+     * @param  mixed            $default Default return value when key does not exist
      * @return array|mixed|null
      */
-    public function delete($key = null)
+    public function delete($key = null, $default = null)
     {
-        return $this->post($key);
+        return $this->post($key, $default);
     }
 
     /**
@@ -284,23 +321,28 @@ class Request
      */
     public function cookies($key = null)
     {
-        if (!isset($this->env['slim.request.cookie_hash'])) {
-            $cookieHeader = isset($this->env['COOKIE']) ? $this->env['COOKIE'] : '';
-            $this->env['slim.request.cookie_hash'] = Util::parseCookieHeader($cookieHeader);
-        }
         if ($key) {
-            if (isset($this->env['slim.request.cookie_hash'][$key])) {
-                return $this->env['slim.request.cookie_hash'][$key];
-            } else {
-                return null;
-            }
-        } else {
-            return $this->env['slim.request.cookie_hash'];
+            return $this->cookies->get($key);
         }
+
+        return $this->cookies;
+        // if (!isset($this->env['slim.request.cookie_hash'])) {
+        //     $cookieHeader = isset($this->env['COOKIE']) ? $this->env['COOKIE'] : '';
+        //     $this->env['slim.request.cookie_hash'] = Util::parseCookieHeader($cookieHeader);
+        // }
+        // if ($key) {
+        //     if (isset($this->env['slim.request.cookie_hash'][$key])) {
+        //         return $this->env['slim.request.cookie_hash'][$key];
+        //     } else {
+        //         return null;
+        //     }
+        // } else {
+        //     return $this->env['slim.request.cookie_hash'];
+        // }
     }
 
     /**
-     * Does the Request body contain parseable form data?
+     * Does the Request body contain parsed form data?
      * @return bool
      */
     public function isFormData()
@@ -323,24 +365,29 @@ class Request
     public function headers($key = null, $default = null)
     {
         if ($key) {
-            $key = strtoupper($key);
-            $key = str_replace('-', '_', $key);
-            $key = preg_replace('@^HTTP_@', '', $key);
-            if (isset($this->env[$key])) {
-                return $this->env[$key];
-            } else {
-                return $default;
-            }
-        } else {
-            $headers = array();
-            foreach ($this->env as $key => $value) {
-                if (strpos($key, 'slim.') !== 0) {
-                    $headers[$key] = $value;
-                }
-            }
-
-            return $headers;
+            return $this->headers->get($key, $default);
         }
+
+        return $this->headers;
+        // if ($key) {
+        //     $key = strtoupper($key);
+        //     $key = str_replace('-', '_', $key);
+        //     $key = preg_replace('@^HTTP_@', '', $key);
+        //     if (isset($this->env[$key])) {
+        //         return $this->env[$key];
+        //     } else {
+        //         return $default;
+        //     }
+        // } else {
+        //     $headers = array();
+        //     foreach ($this->env as $key => $value) {
+        //         if (strpos($key, 'slim.') !== 0) {
+        //             $headers[$key] = $value;
+        //         }
+        //     }
+        //
+        //     return $headers;
+        // }
     }
 
     /**
@@ -354,15 +401,11 @@ class Request
 
     /**
      * Get Content Type
-     * @return string
+     * @return string|null
      */
     public function getContentType()
     {
-        if (isset($this->env['CONTENT_TYPE'])) {
-            return $this->env['CONTENT_TYPE'];
-        } else {
-            return null;
-        }
+        return $this->headers->get('CONTENT_TYPE');
     }
 
     /**
@@ -376,9 +419,9 @@ class Request
             $contentTypeParts = preg_split('/\s*[;,]\s*/', $contentType);
 
             return strtolower($contentTypeParts[0]);
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -410,9 +453,9 @@ class Request
         $mediaTypeParams = $this->getMediaTypeParams();
         if (isset($mediaTypeParams['charset'])) {
             return $mediaTypeParams['charset'];
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -421,11 +464,7 @@ class Request
      */
     public function getContentLength()
     {
-        if (isset($this->env['CONTENT_LENGTH'])) {
-            return (int) $this->env['CONTENT_LENGTH'];
-        } else {
-            return 0;
-        }
+        return $this->headers->get('CONTENT_LENGTH', 0);
     }
 
     /**
@@ -434,17 +473,21 @@ class Request
      */
     public function getHost()
     {
-        if (isset($this->env['HOST'])) {
-            if (strpos($this->env['HOST'], ':') !== false) {
-                $hostParts = explode(':', $this->env['HOST']);
+        if (isset($this->env['HTTP_HOST'])) {
+            if(preg_match('/^(\[[a-fA-F0-9:.]+\])(:\d+)?\z/', $this->env['HTTP_HOST'], $matches)) {
+                return $matches[1];
+            } else {
+                if (strpos($this->env['HTTP_HOST'], ':') !== false) {
+                    $hostParts = explode(':', $this->env['HTTP_HOST']);
 
-                return $hostParts[0];
+                    return $hostParts[0];
+                }
             }
 
-            return $this->env['HOST'];
-        } else {
-            return $this->env['SERVER_NAME'];
+            return $this->env['HTTP_HOST'];
         }
+
+        return $this->env['SERVER_NAME'];
     }
 
     /**
@@ -462,7 +505,7 @@ class Request
      */
     public function getPort()
     {
-        return (int) $this->env['SERVER_PORT'];
+        return (int)$this->env['SERVER_PORT'];
     }
 
     /**
@@ -539,10 +582,11 @@ class Request
      */
     public function getIp()
     {
-        if (isset($this->env['X_FORWARDED_FOR'])) {
-            return $this->env['X_FORWARDED_FOR'];
-        } elseif (isset($this->env['CLIENT_IP'])) {
-            return $this->env['CLIENT_IP'];
+        $keys = array('X_FORWARDED_FOR', 'HTTP_X_FORWARDED_FOR', 'CLIENT_IP', 'REMOTE_ADDR');
+        foreach ($keys as $key) {
+            if (isset($this->env[$key])) {
+                return $this->env[$key];
+            }
         }
 
         return $this->env['REMOTE_ADDR'];
@@ -554,11 +598,7 @@ class Request
      */
     public function getReferrer()
     {
-        if (isset($this->env['REFERER'])) {
-            return $this->env['REFERER'];
-        } else {
-            return null;
-        }
+        return $this->headers->get('HTTP_REFERER');
     }
 
     /**
@@ -576,10 +616,6 @@ class Request
      */
     public function getUserAgent()
     {
-        if (isset($this->env['USER_AGENT'])) {
-            return $this->env['USER_AGENT'];
-        } else {
-            return null;
-        }
+        return $this->headers->get('HTTP_USER_AGENT');
     }
 }
