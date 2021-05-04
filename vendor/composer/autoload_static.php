@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitdc11d01371d2c7bf57e9e56ba95364a1
+class ComposerStaticInitcb938588b172c197b2d58fd4052a5b14
 {
     public static $files = array (
         '17fd9fef37c97cfdc0c7794299a8423d' => __DIR__ . '/..' . '/vrana/notorm/NotORM.php',
@@ -48,10 +48,10 @@ class ComposerStaticInitdc11d01371d2c7bf57e9e56ba95364a1
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitdc11d01371d2c7bf57e9e56ba95364a1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitdc11d01371d2c7bf57e9e56ba95364a1::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitdc11d01371d2c7bf57e9e56ba95364a1::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitdc11d01371d2c7bf57e9e56ba95364a1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitcb938588b172c197b2d58fd4052a5b14::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitcb938588b172c197b2d58fd4052a5b14::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitcb938588b172c197b2d58fd4052a5b14::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitcb938588b172c197b2d58fd4052a5b14::$classMap;
 
         }, null, ClassLoader::class);
     }

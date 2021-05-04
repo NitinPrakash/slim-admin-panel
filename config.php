@@ -20,6 +20,6 @@
     define( 'HOST',$host );            
     
     $db = new NotORM($pdo);        
-    //$home_settings = ['plugins'=>['inline']];        
+           
       
 ?>
