@@ -428,11 +428,17 @@ class PHPMailer
     public $Debugoutput = 'echo';
 
     /**
+<<<<<<< HEAD
      * Whether to keep the SMTP connection open after each message.
      * If this is set to true then the connection will remain open after a send,
      * and closing the connection will require an explicit call to smtpClose().
      * It's a good idea to use this if you are sending multiple messages as it reduces overhead.
      * See the mailing list example for how to use it.
+=======
+     * Whether to keep SMTP connection open after each message.
+     * If this is set to true then to close the connection
+     * requires an explicit call to smtpClose().
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
      *
      * @var bool
      */
@@ -750,7 +756,11 @@ class PHPMailer
      *
      * @var string
      */
+<<<<<<< HEAD
     const VERSION = '6.5.0';
+=======
+    const VERSION = '6.4.1';
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
 
     /**
      * Error severity: message only, continue processing.
@@ -1337,8 +1347,12 @@ class PHPMailer
         if (null === $patternselect) {
             $patternselect = static::$validator;
         }
+<<<<<<< HEAD
         //Don't allow strings as callables, see SECURITY.md and CVE-2021-3603
         if (is_callable($patternselect) && !is_string($patternselect)) {
+=======
+        if (is_callable($patternselect)) {
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
             return call_user_func($patternselect, $address);
         }
         //Reject line breaks in addresses; it's valid RFC5322, but not RFC5321
@@ -2185,8 +2199,12 @@ class PHPMailer
      * The default language is English.
      *
      * @param string $langcode  ISO 639-1 2-character language code (e.g. French is "fr")
+<<<<<<< HEAD
      * @param string $lang_path Path to the language file directory, with trailing separator (slash).D
      *                          Do not set this from user input!
+=======
+     * @param string $lang_path Path to the language file directory, with trailing separator (slash)
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
      *
      * @return bool
      */
@@ -2248,6 +2266,7 @@ class PHPMailer
             if (!static::fileIsAccessible($lang_file)) {
                 $foundlang = false;
             } else {
+<<<<<<< HEAD
                 //$foundlang = include $lang_file;
                 $lines = file($lang_file);
                 foreach ($lines as $line) {
@@ -2269,11 +2288,20 @@ class PHPMailer
                         $PHPMAILER_LANG[$matches[1]] = (string)$matches[3];
                     }
                 }
+=======
+                //Overwrite language-specific strings.
+                //This way we'll never have missing translation keys.
+                $foundlang = include $lang_file;
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
             }
         }
         $this->language = $PHPMAILER_LANG;
 
+<<<<<<< HEAD
         return $foundlang; //Returns false if language not found
+=======
+        return (bool) $foundlang; //Returns false if language not found
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
     }
 
     /**

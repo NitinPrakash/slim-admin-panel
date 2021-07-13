@@ -30,7 +30,11 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
+<<<<<<< HEAD
     'reference' => 'fc268ba1b2a077613cdb0621181387a41f74761b',
+=======
+    'reference' => 'bc4fba7b651a90df854b0566fcdbfd13b676698c',
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
     'name' => '__root__',
   ),
   'versions' => 
@@ -42,6 +46,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
+<<<<<<< HEAD
       'reference' => 'fc268ba1b2a077613cdb0621181387a41f74761b',
     ),
     'phpmailer/phpmailer' => 
@@ -52,6 +57,18 @@ private static $installed = array (
       array (
       ),
       'reference' => 'a5b5c43e50b7fba655f793ad27303cd74c57363c',
+=======
+      'reference' => 'bc4fba7b651a90df854b0566fcdbfd13b676698c',
+    ),
+    'phpmailer/phpmailer' => 
+    array (
+      'pretty_version' => 'v6.4.1',
+      'version' => '6.4.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9256f12d8fb0cd0500f93b19e18c356906cbed3d',
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
     ),
     'phpoffice/phpexcel' => 
     array (

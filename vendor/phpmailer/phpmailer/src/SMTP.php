@@ -35,7 +35,11 @@ class SMTP
      *
      * @var string
      */
+<<<<<<< HEAD:vendor/phpmailer/phpmailer/src/SMTP.php
     const VERSION = '6.5.0';
+=======
+    const VERSION = '6.4.1';
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35:vendor/phpmailer/phpmailer/class.smtp.php
 
     /**
      * SMTP line break constant.
@@ -186,7 +190,10 @@ class SMTP
         'Amazon_SES' => '/[\d]{3} Ok (.*)/',
         'SendGrid' => '/[\d]{3} Ok: queued as (.*)/',
         'CampaignMonitor' => '/[\d]{3} 2.0.0 OK:([a-zA-Z\d]{48})/',
+<<<<<<< HEAD:vendor/phpmailer/phpmailer/src/SMTP.php
         'Haraka' => '/[\d]{3} Message Queued \((.*)\)/',
+=======
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35:vendor/phpmailer/phpmailer/class.smtp.php
     ];
 
     /**

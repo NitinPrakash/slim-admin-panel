@@ -46,7 +46,11 @@ class POP3
      *
      * @var string
      */
+<<<<<<< HEAD:vendor/phpmailer/phpmailer/src/POP3.php
     const VERSION = '6.5.0';
+=======
+    const VERSION = '6.4.1';
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35:vendor/phpmailer/phpmailer/class.pop3.php
 
     /**
      * Default POP3 port number.

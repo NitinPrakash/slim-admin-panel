@@ -1,5 +1,5 @@
 <?php 
-        include_once('vendor/autoload.php');
+    include_once('vendor/autoload.php');
 	include_once('config.php');     
         
         $authenticate = function ($app) {
@@ -20,7 +20,7 @@
            $app->view()->setData('user', $user);
         });
         
-	$app->get('/', function() use( $app) { 
+	   $app->get('/', function() use( $app) { 
             $flash = $app->view()->getData('flash');
             $error = '';
             if (isset($flash['error'])) {
@@ -32,15 +32,16 @@
         
         $app->post('/', function() use( $app,$db ) {   
             
-            $username = trim( $app->request()->post( 'username' ) );
-            $password = md5( trim( $app->request()->post( 'password' ) ) );            
+            extract( $_POST );
+
+            $username = trim( $username );
+            $password = md5( trim( $password ) );            
             
-            $user = $db-> users() -> where('username',$username) -> where( 'pass_word = ?',$password ) ->fetch(); 
+            $user = $db-> users() -> where('email',$username) -> where( 'password = ?',$password ) ->fetch();             
             
             if($user){
                $_SESSION['user'] = ['id'=> $user['id'],'email'=>$user['email'],'name'=>$user['name']];                
-               $app->view()->setData('user', $user);
-               //echo SITEROOT.'/dashboard';exit;
+               $app->view()->setData('user', $user);               
                $app->redirect(SITEROOT.'/dashboard'); 
             }else{
                $app->flash('error', 'Invalid user details. Please try again!'); '' ; 

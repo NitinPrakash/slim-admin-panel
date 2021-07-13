@@ -3,11 +3,11 @@
 <head>
 	
 	<meta charset="utf-8">
-	<meta name="description" content="Sewa Sankalp Administrator Backend">
+	<meta name="description" content="<?php echo SITENAME;?> Backend">
         <meta name="author" content="Nitin Prakash">
         <meta name="keyword" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Sewa Sankalp Admin</title>
+	      <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title><?php echo SITENAME;?> </title>
  
         <!-- start: Css -->
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
@@ -17,7 +17,7 @@
         <link rel="stylesheet" type="text/css" href="assets/css/plugins/simple-line-icons.css"/>
         <link rel="stylesheet" type="text/css" href="assets/css/plugins/animate.min.css"/>
         <link rel="stylesheet" type="text/css" href="assets/css/plugins/fullcalendar.min.css"/>
-          <link href="assets/css/style.css" rel="stylesheet">
+        <link href="assets/css/style.css" rel="stylesheet">
 	<!-- end: Css -->
 
 	<link rel="shortcut icon" href="assets/img/logomi.png" />

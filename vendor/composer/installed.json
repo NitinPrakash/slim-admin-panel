@@ -2,6 +2,7 @@
     "packages": [
         {
             "name": "phpmailer/phpmailer",
+<<<<<<< HEAD
             "version": "v6.5.0",
             "version_normalized": "6.5.0.0",
             "source": {
@@ -13,6 +14,19 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/a5b5c43e50b7fba655f793ad27303cd74c57363c",
                 "reference": "a5b5c43e50b7fba655f793ad27303cd74c57363c",
+=======
+            "version": "v6.4.1",
+            "version_normalized": "6.4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "9256f12d8fb0cd0500f93b19e18c356906cbed3d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/9256f12d8fb0cd0500f93b19e18c356906cbed3d",
+                "reference": "9256f12d8fb0cd0500f93b19e18c356906cbed3d",
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
                 "shasum": ""
             },
             "require": {
@@ -37,7 +51,11 @@
                 "stevenmaguire/oauth2-microsoft": "Needed for Microsoft XOAUTH2 authentication",
                 "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)"
             },
+<<<<<<< HEAD
             "time": "2021-06-16T14:33:43+00:00",
+=======
+            "time": "2021-04-29T12:25:04+00:00",
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -69,7 +87,11 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.5.0"
+=======
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.4.1"
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
             },
             "funding": [
                 {
@@ -211,6 +233,7 @@
                 "type": "git",
                 "url": "https://github.com/vrana/notorm.git",
                 "reference": "e49d5d2f1bfe440dc82b61f46172635dfcb6f6dd"
+<<<<<<< HEAD
             },
             "dist": {
                 "type": "zip",
@@ -243,6 +266,45 @@
                 "database",
                 "dbal"
             ],
+=======
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vrana/notorm/zipball/e49d5d2f1bfe440dc82b61f46172635dfcb6f6dd",
+                "reference": "e49d5d2f1bfe440dc82b61f46172635dfcb6f6dd",
+                "shasum": ""
+            },
+            "time": "2014-10-30T16:55:08+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "files": [
+                    "NotORM.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0",
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Jakub Vrána",
+                    "homepage": "http://www.vrana.cz/"
+                }
+            ],
+            "description": "NotORM is a PHP library for simple working with data in the database.",
+            "homepage": "http://www.notorm.com/",
+            "keywords": [
+                "database",
+                "dbal"
+            ],
+            "support": {
+                "issues": "https://github.com/vrana/notorm/issues",
+                "source": "https://github.com/vrana/notorm/tree/master"
+            },
+>>>>>>> 601a626edf3f64aeedbe66373862a90942a9be35
             "install-path": "../vrana/notorm"
         }
     ],
